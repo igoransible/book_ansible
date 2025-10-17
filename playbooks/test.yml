@@ -1,0 +1,10 @@
+---
+- hosts: all
+  tasks:
+    - name: Test connectivity
+      command: echo "Hello from Ansible"
+
+    - name: Show OS distribution
+      debug:
+        msg: "This host is running {{ ansible_distribution }} {{ ansible_distribution_version }}"
+

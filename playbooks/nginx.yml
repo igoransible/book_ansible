@@ -1,0 +1,10 @@
+---
+- name: Ensure nginx is installed on Fedora
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Install nginx package
+      ansible.builtin.dnf:
+        name: nginx
+        state: present

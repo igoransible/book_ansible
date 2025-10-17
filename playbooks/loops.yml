@@ -1,0 +1,43 @@
+---
+- name: Install packages on Fedora
+  hosts: webservers
+
+  vars:
+    packages:
+      - nginx
+      - git
+      - curl
+
+  tasks:
+    - name: Print variable value
+      debug:
+        msg: "Package being installed: {{ item }}"
+      loop: "{{ packages }}"
+
+    - name: Install required packages on Fedora
+      dnf:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ packages }}"
+      when: ansible_facts['os_family'] == "RedHat"
+      register: install_results
+
+    - name: Show installation results
+      debug:
+        var: install_results
+
+
+- name: Looping Over Tasks with with_items
+  hosts: webservers
+
+  vars:
+    services:
+      - nginx
+      - sshd
+
+  tasks:
+    - name: Ensure services are running
+      service:
+        name: "{{ item }}"
+        state: started
+      with_items: "{{ services }}"

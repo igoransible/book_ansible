@@ -1,0 +1,24 @@
+---
+- name: Implementing Conditionals
+  hosts: webservers
+
+  vars:
+    package_name: nginx
+
+  tasks:
+    - name: Install Nginx on Debian-based systems
+      apt:
+        name: "{{ package_name }}"
+        state: present
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: Install Nginx on RedHat or Fedora-based systems
+      dnf:
+        name: "{{ package_name }}"
+        state: present
+      when: ansible_facts['os_family'] in ["RedHat", "Fedora"]
+
+    - name: Ensure Nginx is running
+      service:
+        name: nginx
+        state: started
