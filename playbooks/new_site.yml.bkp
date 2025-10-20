@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: fedora
   become: true
   pre_tasks:
 #    - name: update ubuntu

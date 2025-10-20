@@ -1,6 +1,6 @@
 ---
 - name: Ensure nginx is installed on Fedora
-  hosts: all
+  hosts: fedora
   become: true
 
   tasks:

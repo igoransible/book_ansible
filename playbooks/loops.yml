@@ -1,6 +1,6 @@
 ---
 - name: Install packages on Fedora
-  hosts: webservers
+  hosts: fedora
 
   vars:
     packages:
@@ -28,7 +28,7 @@
 
 
 - name: Looping Over Tasks with with_items
-  hosts: webservers
+  hosts: fedora
 
   vars:
     services:

@@ -1,0 +1,26 @@
+---
+- name: Using Handlers
+  hosts: fedora
+  become: yes
+
+  tasks:
+    - name: Ensure Nginx is installed
+      dnf:
+        name: nginx
+        state: present
+
+    - name: Copy Nginx configuration file
+      copy:
+        src: /home/igor/book_ansible/files/nginx.conf
+        dest: /etc/nginx/nginx.conf
+        owner: root
+        group: root
+        mode: '0644'
+      notify:
+        - Restart Nginx
+
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted

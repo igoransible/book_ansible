@@ -1,6 +1,6 @@
 ---
 - name: Implementing Conditionals
-  hosts: webservers
+  hosts: fedora
 
   vars:
     package_name: nginx

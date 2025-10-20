@@ -1,6 +1,6 @@
 ---
 - name: Using Variables and Facts
-  hosts: webservers
+  hosts: fedora
   become: yes
 
   vars:

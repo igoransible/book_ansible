@@ -1,0 +1,6 @@
+- name: Ensure Nginx is running
+  service:
+    name: nginx
+    state: started
+- name: Ensure Git is installed
+  command: git --version

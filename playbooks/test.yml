@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: fedora
   tasks:
     - name: Test connectivity
       command: echo "Hello from Ansible"

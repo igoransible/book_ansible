@@ -1,0 +1,9 @@
+- name: Install Nginx
+  dnf:
+    name: nginx
+    state: present
+
+- name: Install Git
+  dnf:
+    name: git
+    state: present

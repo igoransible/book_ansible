@@ -1,0 +1,10 @@
+---
+- name: Main Playbook with Includes and Imports
+  hosts: fedora
+  become: yes
+
+  tasks:
+    - name: Include install_packages tasks
+      include_tasks: tasks/install_packages.yml
+    - name: Include setup_handlers
+      include_tasks: tasks/setup_handlers.yml
