@@ -1,0 +1,24 @@
+---
+- name: Configure Web Service or Fedora
+  hosts: fedora
+  become: yes
+
+  tasks:
+    - name: Ensure Nginx is installed
+      dnf:
+        name: nginx
+        state: present
+
+    - name: Configure Nginx
+      template:
+        src: ../files/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+      notify:
+        - Restart Nginx
+
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted
+
