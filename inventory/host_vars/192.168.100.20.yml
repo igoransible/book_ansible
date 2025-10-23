@@ -1,3 +1,8 @@
+db_package: mariadb-server
+db_service: mariadb
+db_port: 3306 
+db_user: admin 
+db_password: secret
 #apache_package: httpd
 #apache_service: httpd
 #passwd_auth: no

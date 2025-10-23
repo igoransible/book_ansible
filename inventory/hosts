@@ -2,4 +2,9 @@
 192.168.100.20
 
 [ubuntu]
-192.168.100.19
+ubuntu-server ansible_host=192.168.100.15 http_port=80
+
+[fedora:vars]
+http_port=80
+max_clients=200
+

@@ -1,0 +1,17 @@
+---
+- name: Deploy Inventory Files
+  hosts: localhost
+  tasks:
+    - name: Ensure Git repository is cloned
+      git:
+        repo: 'https://github.com/igoransible/book_ansible.git'
+        dest: /home/igor/src_testing
+        update: yes
+
+    - name: Copy inventory files to Ansible directory
+      copy:
+        src: /home/igor/src_testing/inventory/hosts
+        dest: /home/igor/des_testing
+        owner: igor
+        group: igor
+        mode: '0755'
