@@ -1,0 +1,29 @@
+---
+- name: Import base role to update system
+  import_role:
+    name: base
+
+- name: Install Nginx on Ubuntu
+  apt:
+    name: nginx
+    state: present
+    update_cache: yes
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Deploy Nginx config from template
+  template:
+    src: nginx.j2
+    dest: /etc/nginx/sites-available/default
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Nginx
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Ensure Nginx is running and enabled
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+  notify: Run base role after Nginx install
+  when: ansible_facts['os_family'] == "Debian"

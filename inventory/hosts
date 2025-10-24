@@ -8,3 +8,5 @@ ubuntu-server ansible_host=192.168.100.15 http_port=80
 http_port=80
 max_clients=200
 
+[localhost]
+127.0.0.1

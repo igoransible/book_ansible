@@ -1,0 +1,11 @@
+---
+- name: Use Custom Module
+  hosts: ubuntu
+  tasks:
+    - name: Greet with custom module
+      my_custom_module:
+        name: Ansible
+      register: result
+    - name: Print result
+      debug:
+        var: result.message
