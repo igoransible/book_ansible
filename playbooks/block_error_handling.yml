@@ -1,0 +1,47 @@
+---
+- name: Error Handling with Block
+  hosts: fedora
+
+  pre_tasks:
+    - name: Check if Git is installed
+      command: rpm -q git
+      register: git_check
+      ignore_errors: yes
+
+    - name: Git is installed
+      debug:
+        msg: "Git is installed"
+      when: git_check.rc == 0
+
+    - name: Install Git
+      dnf:
+        name: git
+        state: present
+      when: git_check.rc != 0
+
+    - name: Git was installed successfully
+      debug:
+        msg: "Git was installed successfully"
+      when: git_check.rc != 0
+
+  tasks:
+    - block:
+        - name: Attempt to download a file
+          get_url:
+            url: http://gitforgits.com/non_existent_file
+            dest: /tmp/non_existent_file
+
+        - name: Notify of download success
+          debug:
+            msg: "File downloaded successfully."
+
+      rescue:
+        - name: Handle download failure
+          debug:
+            msg: "Download failed. Proceeding with alternative actions."
+
+      always:
+        - name: Cleanup actions
+          file:
+            path: /tmp/non_existent_file
+            state: absent

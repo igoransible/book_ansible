@@ -1,0 +1,20 @@
+---
+- name: Demonstrate Error Handling
+  hosts: fedora
+  tasks:
+    - name: Check free disk space
+      command: df -h /
+      register: disk_space
+    - name: Fail if free space is less than 10%
+      debug:
+        msg: "Free space is sufficient: {{ disk_space.stdout }}"
+      failed_when: "'10%' in disk_space.stdout"
+
+    - name: Attempt to create a directory
+      command: mkdir /skusobna
+      ignore_errors: yes
+      register: create_dir_result
+    - name: Notify of failure
+      debug:
+        msg: "Previous task failed, but playbook continues."
+      when: create_dir_result is failed
