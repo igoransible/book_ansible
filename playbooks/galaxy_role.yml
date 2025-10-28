@@ -1,0 +1,5 @@
+---
+- name: Install and configure Apache on Fedora hosts
+  hosts: fedora
+  roles:
+    - geerlingguy.apache
