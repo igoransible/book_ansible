@@ -1,0 +1,29 @@
+- name: Deploy Webserver
+  hosts: fedora
+  vars:
+    nginx_port: 80
+    server_name: test.com
+    document_root: /var/www/test.com
+  tasks:
+    - name: Ensure Nginx is installed
+      dnf:
+        name: nginx
+        state: present
+
+    - name: Deploy Nginx configuration from template
+      template:
+        src: ../templates/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+      notify:
+        - Restart Nginx
+
+    - name: Ensure Nginx is running
+      service:
+        name: nginx
+        state: started
+
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted

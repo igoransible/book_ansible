@@ -1,0 +1,36 @@
+- name: Use Jinja2 Template
+  hosts: fedora
+  vars:
+    nginx_port: 80
+    server_name: test.com
+    document_root: /var/www/test.com
+
+  tasks:
+    - name: Ensure document root directory exists
+      file:
+        path: "{{ document_root }}"
+        state: directory
+        owner: nginx
+        group: nginx
+        mode: '0755'
+
+    - name: Create a basic index.html
+      copy:
+        dest: "{{ document_root }}/index.html"
+        content: "<h1>Hello from {{ server_name }} via Ansible!</h1>"
+        owner: nginx
+        group: nginx
+        mode: '0644'
+
+    - name: Deploy Nginx configuration from template
+      template:
+        src: ../templates/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+      notify:
+        - Restart Nginx
+
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted
