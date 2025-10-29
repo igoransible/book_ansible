@@ -1,0 +1,22 @@
+---
+- name: Asynchronous Nginx Installation on Fedora
+  hosts: fedora
+  become: true
+  tasks:
+    - name: Ensure Nginx is installed asynchronously
+      dnf:
+        name: nginx
+        state: present
+      async: 300
+      poll: 0
+      register: nginx_install
+
+    - name: Wait for Nginx installation to complete
+      async_status:
+        jid: "{{ nginx_install.ansible_job_id }}"
+      register: nginx_install_status
+      until: nginx_install_status.finished
+      retries: 30
+      delay: 10
+    - debug:
+        var: nginx_install_status
